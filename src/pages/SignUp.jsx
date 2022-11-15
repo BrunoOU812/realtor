@@ -1,8 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../firebase";
+import { async } from "@firebase/util";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -10,6 +19,7 @@ export default function SignUp() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const { name, email, password } = formData;
   const formDataOnChange = (e) => {
     console.log(e.target.value, formData.email);
@@ -20,6 +30,30 @@ export default function SignUp() {
   };
   const showPasswordOnClick = (e) => {
     setShowPassword((prevState) => !prevState);
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      const user = userCredential.user;
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+      console.log(user);
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      navigate("/");
+      toast.success(`Registration Successful!`);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
   return (
     <section>
@@ -33,7 +67,7 @@ export default function SignUp() {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%]">
-          <form action="">
+          <form onSubmit={onSubmit}>
             <input
               className="w-full"
               type="text"
