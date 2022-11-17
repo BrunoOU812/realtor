@@ -45,7 +45,7 @@ export default function SignUp() {
       });
       const user = userCredential.user;
       const formDataCopy = { ...formData };
-      delete formDataCopy.password;
+      // delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
       console.log(user);
       await setDoc(doc(db, "users", user.uid), formDataCopy);
@@ -57,7 +57,7 @@ export default function SignUp() {
   };
   return (
     <section>
-      <h1 className="text-3xl text center mt-6 font-bold">Sign Up</h1>
+      <h1 className="text-3xl text-center mt-6 font-bold">Sign Up</h1>
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-width-6xl">
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
           <img
@@ -66,7 +66,7 @@ export default function SignUp() {
             className="w-full rounded-2xl"
           />
         </div>
-        <div className="w-full md:w-[67%] lg:w-[40%]">
+        <div className="w-full px-20 md:w-[67%] lg:w-[40%]">
           <form onSubmit={onSubmit}>
             <input
               className="w-full"
@@ -75,7 +75,7 @@ export default function SignUp() {
               value={name}
               onChange={formDataOnChange}
               placeholder="Full Name"
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
             />
             <input
               className="w-full"
@@ -84,7 +84,7 @@ export default function SignUp() {
               value={email}
               onChange={formDataOnChange}
               placeholder="name@email.wht"
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
             />
             <div className="w-full relative">
               <input
@@ -94,7 +94,7 @@ export default function SignUp() {
                 value={password}
                 onChange={formDataOnChange}
                 placeholder="password"
-                className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+                className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               />
               {showPassword ? (
                 <AiFillEyeInvisible

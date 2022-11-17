@@ -1,21 +1,31 @@
+import { sendPasswordResetEmail } from "firebase/auth";
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
+import { getAuth } from "firebase/auth";
 export default function ForgotPassword() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const { name, email, password } = formData;
-  const formDataOnChange = (e) => {
-    setFormData(e.target.value);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const onChange = (e) => {
+    setEmail(e.target.value);
   };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success("email sent to your account");
+      navigate("/SignIn");
+    } catch (error) {
+      toast.error("Could not send email");
+    }
+  };
+
   return (
     <section>
-      <h1 className="text-3xl text center mt-6 font-bold">Forgot Password</h1>
+      <h1 className="text-3xl text-center mt-6 font-bold">Forgot Password</h1>
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-width-6xl">
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
           <img
@@ -24,16 +34,15 @@ export default function ForgotPassword() {
             className="w-full rounded-2xl"
           />
         </div>
-        <div className="w-full md:w-[67%] lg:w-[40%]">
-          <form action="">
+        <div className="w-full px-20 md:w-[67%] lg:w-[40%]">
+          <form onSubmit={onSubmit}>
             <input
-              className="w-full"
               type="email"
               id="email"
               value={email}
-              onChange={formDataOnChange}
+              onChange={onChange}
               placeholder="name@email.wht"
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
             />
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
               <p className="mb-6">

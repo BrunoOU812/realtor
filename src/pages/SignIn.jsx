@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ export default function SignIn() {
     password: "",
   });
   const { email, password } = formData;
+  const navigate = useNavigate();
   const formDataOnChange = (e) => {
     console.log(e.target.value, formData.email);
     setFormData((prevState) => ({
@@ -20,19 +23,35 @@ export default function SignIn() {
   const showPasswordOnClick = (e) => {
     setShowPassword((prevState) => !prevState);
   };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userCredential.user) {
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
   return (
     <section>
-      <h1 className="text-3xl text center mt-6 font-bold">Sign In</h1>
-      <div className="flex justify-center flex-wrap items-center px-6 py-12 max-width-6xl">
-        <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
+      <h1 className="text-3xl text-center mt-6 font-bold">Sign In</h1>
+      <div className="flex  justify-center flex-wrap items-center px-6 py-12 max-width-6xl">
+        <div className=" md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
           <img
             src="https://images.unsplash.com/flagged/photo-1564767609342-620cb19b2357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8a2V5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
             alt="key"
             className="w-full rounded-2xl"
           />
         </div>
-        <div className="w-full md:w-[67%] lg:w-[40%]">
-          <form action="">
+        <div className="w-full px-20 md:w-[67%] lg:w-[40%]">
+          <form onSubmit={onSubmit}>
             <input
               className="w-full"
               type="email"
@@ -40,7 +59,7 @@ export default function SignIn() {
               value={email}
               onChange={formDataOnChange}
               placeholder="name@email.wht"
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+              className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
             />
             <div className="w-full relative">
               <input
@@ -50,7 +69,7 @@ export default function SignIn() {
                 value={password}
                 onChange={formDataOnChange}
                 placeholder="password"
-                className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+                className="w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               />
               {showPassword ? (
                 <AiFillEyeInvisible
