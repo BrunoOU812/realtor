@@ -9,8 +9,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { db } from "../firebase";
-import { async } from "@firebase/util";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { async } from "@firebase/util";
 import { toast } from "react-toastify";
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
