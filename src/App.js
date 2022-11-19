@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import Offers from "./pages/Offers";
+import CreateLisitng from "./pages/CreateListing";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/Offers" element={<Offers />} />
+          <Route path="/CreateListing" element={<CreateLisitng />} />
         </Routes>
       </Router>
       <ToastContainer

@@ -53,7 +53,6 @@ export default function SignIn() {
         <div className="w-full px-20 md:w-[67%] lg:w-[40%]">
           <form onSubmit={onSubmit}>
             <input
-              className="w-full"
               type="email"
               id="email"
               value={email}
@@ -63,7 +62,6 @@ export default function SignIn() {
             />
             <div className="w-full relative">
               <input
-                className="w-full "
                 type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
