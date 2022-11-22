@@ -8,7 +8,6 @@ export default function Header() {
   const [pageState, setPageState] = React.useState("SignIn");
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.pathname);
   const pathMatchRoute = (route) => {
     return route === location.pathname ? true : "";
   };

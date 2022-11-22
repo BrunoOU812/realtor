@@ -5,9 +5,6 @@ import Spinner from "./Spinner";
 export default function PrivateRoute() {
   const { loggedIn, checkingStatus } = useAuthStatus();
   if (checkingStatus) {
-    setTimeout(() => {
-      console.log("funca");
-    }, 2000);
     return <Spinner />;
   }
 
