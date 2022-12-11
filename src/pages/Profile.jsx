@@ -85,7 +85,7 @@ export default function Profile() {
     }
   };
   const onEdit = (listingID) => {
-    navigate(`/edit-listing/${listingID}`);
+    navigate(`/EditListing/${listingID}`);
   };
   return (
     <div className="max-w-6xl mx-auto flex justify-center items-center flex-col">
