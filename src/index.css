@@ -4,3 +4,12 @@
 body{
     background-color: #F6FAF7;
 }
+
+.swiper-button-next:after,
+.swiper-button-prev:after{
+    color:#a8d8dc
+}
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
+    color: #a8d8dc !important
+}
