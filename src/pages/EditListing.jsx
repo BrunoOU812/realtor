@@ -220,19 +220,6 @@ export default function EditListing() {
         <div className="flex space-x-6">
           <button
             className={`px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
-              type === "rent"
-                ? "bg-white text-black"
-                : "bg-slate-600 text-white"
-            }`}
-            type="button"
-            id="type"
-            onClick={onChange}
-            value="sale"
-          >
-            Rent
-          </button>
-          <button
-            className={`px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               type === "sale"
                 ? "bg-white text-black"
                 : "bg-slate-600 text-white"
@@ -241,6 +228,19 @@ export default function EditListing() {
             id="type"
             onClick={onChange}
             value="rent"
+          >
+            Rent
+          </button>
+          <button
+            className={`px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
+              type === "rent"
+                ? "bg-white text-black"
+                : "bg-slate-600 text-white"
+            }`}
+            type="button"
+            id="type"
+            onClick={onChange}
+            value="sale"
           >
             Sell
           </button>
